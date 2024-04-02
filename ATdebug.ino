@@ -567,11 +567,11 @@ void setup()
     {
         // Initialize Contents
         // deleteFile(SD, "/test2.txt");
-        appendFile(SD, "/test.txt", "Hello \n");
-        // delay(1000000);
+        appendFile(SD, "/deployment2.txt", "Hello \n");
+        delay(1000000);
         // disconnect board and then set init to false
     }
-    readFile(SD, "/test.txt");
+    readFile(SD, "/deployment2.txt");
 }
 
 void loop()
@@ -602,6 +602,14 @@ void loop()
     Serial.print(String(pm25));
     Serial.print(" ug/m^3\t");
     packet += String(pm25);
+    packet += ",";
+
+    // SPS30 PM10 ug/m^3
+    Serial.print("PM2.5 ");
+    float pm10 = sps30.GetMassPM10();
+    Serial.print(String(pm10));
+    Serial.print(" ug/m^3\t");
+    packet += String(pm10);
 
     // GPS
     float lat2 = 0;
@@ -625,8 +633,8 @@ void loop()
     {
         // Serial.print("FixMode:");
         // Serial.println(fixMode);
-        packet += String(fixMode);
-        packet += ",";
+        // packet += String(fixMode);
+        // packet += ",";
 
         // Serial.print("Latitude: ");
         // Serial.print(lat2, 6);
@@ -645,18 +653,18 @@ void loop()
 
         // Serial.print("\tAltitude:");
         // Serial.println(alt2);
-        packet += String(alt2, 7);
-        packet += ",";
+        // packet += String(alt2, 7);
+        // packet += ",";
 
         // Serial.print("Visible Satellites:");
         // Serial.print(vsat2);
-        packet += String(vsat2);
-        packet += ",";
+        // packet += String(vsat2);
+        // packet += ",";
 
         // Serial.print("\tUsed Satellites:");
         // Serial.println(usat2);
-        packet += String(usat2);
-        packet += ",";
+        // packet += String(usat2);
+        // packet += ",";
 
         // Serial.print("Accuracy:");
         // Serial.println(accuracy2);
@@ -703,7 +711,7 @@ void loop()
     Serial.println();
     Serial.println("Packet = " + packet);
     const char *charPacket = packet.c_str();
-    appendFile(SD, "/test.txt", charPacket);
+    appendFile(SD, "/deployment2.txt", charPacket);
     Serial.println();
     // Serial.println("Contents of SD Card: "); 
     // readFile(SD, "/test.txt");
